@@ -1,0 +1,55 @@
+<html ng-app="ezstuff">
+<head>
+    <script src="angular.js"></script>
+</head>
+<body>
+    <div ng-controller="ezCtrl">
+        <ez-customer name="Emmy" address="Emmy.address"></ez-customer>
+        <ez-customer name="Edison" address="Edison.address"></ez-customer>
+    </div>
+
+    <!-- <div ng-controller="ezCtrl">
+        <ez-dialog>
+           <p>Check out the contents, {{name}}!</p>
+           <p><button>Ok,I will</button></p>
+        </ez-dialog>
+    </div> -->
+
+</body>
+</html>
+<script>
+    /*angular.module('ezstuff',[]).controller('ezCtrl',function($scope){
+        $scope.name = "andy burns"
+    }).directive('ezDialog',function(){
+       return {
+          restrict: 'E',
+          replace: true,
+          transclude:true,
+          template: "<div class='ez-dialog'><div class='header'>alert</div><div class='content' ng-transclude></div></div>"
+       }
+    })*/
+
+
+    angular.module("ezstuff",[]).controller("ezCtrl", ["$scope", function($scope) {
+  $scope.Emmy = {
+    name: "Emmy",
+    address: "1600 Amphitheatre"
+  };
+  $scope.Edison = {
+    name: "Edison",
+    address: "2500 Amphitheatre"
+  };
+}])
+.directive("ezCustomer", function() {
+  return {
+      restrict:"E",
+      replace:true,
+      scope:{    // 隔离的作用域
+        name:"=name",     //  赋予变量值
+        address: "@address" // 直接赋予属性值
+      },
+      template: "<div>Name: {{name.name}} Address: {{address}}</div>"
+  };
+});
+
+</script>

@@ -1,0 +1,39 @@
+<html>
+<head>
+    <script src="angular.js"></script>
+</head>
+<body>
+    <button onclick="doCalc();">3+4=?</button>
+    <div id="result"></div>
+</body>
+</html>
+<script type="text/javascript">
+    function doCalc(){
+        var injector = angular.injector(["ezstuff"]),
+            mycalculator = injector.get("ezCalculator"),
+            ret = mycalculator.add(3,4);
+
+            document.querySelector("#result").textContent = ret;
+    }
+    angular.module('ezstuff',[]).provider('ezCalculator',function(){
+        this.setLocal = function(l){
+            var repo = {
+                "CN":"¥",
+                "US":"$"
+            }
+            currency = repo[l] ? repo[l] : "CN"
+            
+        }
+        this.$get = function(){
+            return {
+                add: function(a,b){ return currency + (a+b)},
+                subs: function(a,b){ return currency + (a-b)}
+            }
+        }
+    }).config(function(ezCalculatorProvider){
+        ezCalculatorProvider.setLocal("CN")
+    })
+
+
+    // factory,service,value,constant 定义服务
+</script>

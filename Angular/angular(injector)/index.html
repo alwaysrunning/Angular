@@ -1,0 +1,44 @@
+<html>
+<head>
+    <script src="angular.js"></script>
+</head>
+<body>
+    <!--在这里显示$http的内容-->
+    <div id="logger"></div>
+</body>
+</html>
+<script type="text/javascript">
+    angular.module('ezstuff',[]).provider('myprovide',function(){
+        this.$get = function(){
+            return 'hello world'
+        }
+    })
+    angular.element(document).ready(function(){
+
+        //  1.参数名注入
+        /*angular.injector(['ng','ezstuff']).invoke(function($http){
+            var e = document.getElementById('logger')
+            angular.element(e).text($http.toString())
+        })*/
+        /*angular.injector(['ng','ezstuff']).invoke(function($http,myprovide){
+            var e = document.getElementById('logger')
+            angular.element(e).text(myprovide)
+        })*/
+
+        /*var htp = angular.injector(['ng','ezstuff']).get('$http')
+        var e = document.getElementById('logger')
+            angular.element(e).text(htp.toString())*/
+        /*var htp = angular.injector(['ng','ezstuff']).get('myprovide')
+        var e = document.getElementById('logger')
+            angular.element(e).text(htp) */   
+        
+
+        //  2.依赖数组注入
+        angular.injector(['ng','ezstuff']).invoke(['myprovide',function(xxx){
+            var e = document.getElementById('logger')
+            angular.element(e).text(xxx)
+        }])
+
+
+    })
+</script>

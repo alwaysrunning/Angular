@@ -1,0 +1,44 @@
+<html>
+<head>
+    <title>数据的双向传播</title>
+    <script src="angular.js"></script>
+</head>
+<body ng-app="ezstuff" ng-init="sb={name:'somebody',gender:'male',age:28}">
+    <ez-namecard-editor data="sb"></ez-namecard-editor>
+    <div ez-logger data="sb"></div>
+</body>
+</html>
+
+    <script type="text/javascript">
+      angular.module('ezstuff',[]).directive('ezNamecardEditor',function(){
+        return {
+            restrict: 'E',
+            replace: true,
+            template: "<ul class='nceditor'></ul>",
+            link: function(scope,element,attrs){
+                element.append("<li>name : <input type='text' field='name'></li>")
+                .append("<li>gender : <input type='text' field='gender'></li>")
+                .append("<li>age : <input type='text' field='age'></li>");
+                var model = attrs.data
+                element.on('keyup',function(e){
+                    var field = e.target.getAttribute('field')
+                    scope[model][field]= e.target.value;
+                    scope.$apply("")
+                })
+            }
+
+        }
+      }).directive('ezLogger',function(){
+          return {
+             restrict: 'A',
+             link: function(scope,element,attrs){
+                var model = attrs.data
+                scope.$watch(model,function(n,o){
+                   var cnt = JSON.stringify(n,null,'')
+                   element.html('<pre>'+ cnt +'<pre>')
+                },true)
+             }
+          }
+      })
+    </script>
+ 

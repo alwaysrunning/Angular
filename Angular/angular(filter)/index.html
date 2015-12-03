@@ -1,0 +1,15 @@
+<html ng-app="ezstuff">
+<head>
+    <script src="angular.js"></script>
+</head>
+<body>
+<div ng-controller="ezCtrl">
+    Total salary is {{total|number:2|currency}}
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    angular.module('ezstuff',[]).controller('ezCtrl',function($scope){
+        $scope.total = 123
+    })
+</script>
